@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Especially For Samia ❤️</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. CSS VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --primary-rose: #ff4d79;
+      --deep-rose: #e6005c;
+      --soft-pink: #ffe6ed;
+      --cream-pink: #fff0f5;
+      --pure-white: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.65);
+      --glass-shadow: 0 20px 40px rgba(255, 77, 121, 0.12), 0 8px 16px rgba(0, 0, 0, 0.04);
+      --text-dark: #2d1520;
+      --text-soft: #664050;
+      --font-heading: 'Cinzel', serif;
+      --font-accent: 'Great Vibes', cursive;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --transition-bezier: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 40%, #ffb3c1 70%, #ff8fa3 100%);
+      color: var(--text-dark);
+      position: relative;
+    }
+
+    /* Ambient Glowing Orbs Background */
+    .bg-orbs {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      animation: floatOrb 18s infinite alternate ease-in-out;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: #ffb3c1;
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb-2 {
+      width: 500px;
+      height: 500px;
+      background: #ff8fa3;
+      bottom: -150px;
+      right: -100px;
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: #ffffff;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: -10s;
+      opacity: 0.4;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.1); }
+      100% { transform: translate(-40px, 80px) scale(0.95); }
+    }
+
+    /* Canvas Elements */
+    #background-canvas, #confetti-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #background-canvas { z-index: 2; }
+    #confetti-canvas { z-index: 100; }
+
+    /* Main Container */
+    .app-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Glassmorphism Common Base */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      box-shadow: var(--glass-shadow);
+      padding: 48px 36px;
+      text-align: center;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       2. FIRST SCREEN (INTRO)
+       ========================================================================== */
+    #intro-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.8s var(--transition-bezier), transform 0.8s var(--transition-bezier);
+    }
+
+    #intro-screen.hide {
+      opacity: 0;
+      transform: scale(0.9) translateY(-30px);
+      pointer-events: none;
+    }
+
+    .name-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--deep-rose);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(255, 77, 121, 0.08);
+    }
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, var(--deep-rose) 0%, var(--primary-rose) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 2px 8px rgba(255,255,255,0.5));
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .button-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 16px;
+      width: 100%;
+      min-height: 60px;
+      position: relative;
+    }
+
+    .btn {
+      padding: 16px 36px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s var(--transition-bezier);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff4d79 0%, #e6005c 100%);
+      color: var(--pure-white);
+      box-shadow: 0 10px 25px rgba(230, 0, 92, 0.35);
+      z-index: 2;
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(230, 0, 92, 0.45);
+    }
+
+    .btn-yes:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .btn-no {
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--text-soft);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      position: absolute;
+      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       3. CARDS SCREEN
+       ========================================================================== */
+    #cards-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #cards-screen.active {
+      pointer-events: all;
+      opacity: 1;
+    }
+
+    .card {
+      position: absolute;
+      opacity: 0;
+      transform: translateY(40px) scale(0.92) rotateX(-10deg);
+      pointer-events: none;
+      transition: all 0.7s var(--transition-bezier);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .card.current {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotateX(0deg);
+      pointer-events: all;
+    }
+
+    .card.exit {
+      opacity: 0;
+      transform: translateY(-40px) scale(0.92) rotateX(10deg);
+      pointer-events: none;
+    }
+
+    .card-number {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-rose);
+      background: rgba(255, 255, 255, 0.7);
+      padding: 4px 14px;
+      border-radius: 20px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .card-subtitle {
+      font-family: var(--font-accent);
+      font-size: 1.8rem;
+      color: var(--deep-rose);
+      margin-top: -10px;
+    }
+
+    .card-description {
+      font-size: 1.15rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+      font-weight: 400;
+      max-width: 420px;
+    }
+
+    .btn-next {
+      margin-top: 10px;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe6ed 100%);
+      color: var(--deep-rose);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      padding: 14px 32px;
+      font-size: 1rem;
+      box-shadow: 0 8px 20px rgba(255, 77, 121, 0.15);
+    }
+
+    .btn-next:hover {
+      background: var(--pure-white);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(255, 77, 121, 0.25);
+    }
+
+    /* Progress Dots */
+    .progress-bar-container {
+      position: absolute;
+      bottom: 30px;
+      display: flex;
+      gap: 8px;
+      z-index: 20;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transition: all 0.4s var(--transition-bezier);
+    }
+
+    .progress-dot.active {
+      width: 24px;
+      border-radius: 10px;
+      background: var(--deep-rose);
+    }
+
+    /* ==========================================================================
+       4. FINAL SCREEN
+       ========================================================================== */
+    #final-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 30;
+    }
+
+    #final-screen.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .final-card {
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      animation: floatCard 6s infinite ease-in-out;
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .final-heart-icon {
+      font-size: 4rem;
+      color: var(--deep-rose);
+      animation: pulseHeart 1.5s infinite var(--transition-bezier);
+      filter: drop-shadow(0 0 15px rgba(230, 0, 92, 0.4));
+    }
+
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+    }
+
+    .final-title {
+      font-family: var(--font-accent);
+      font-size: 3.8rem;
+      color: var(--deep-rose);
+      line-height: 1.1;
+    }
+
+    .final-message {
+      font-size: 1.25rem;
+      color: var(--text-dark);
+      line-height: 1.8;
+      font-weight: 500;
+    }
+
+    .glowing-footer {
+      margin-top: 16px;
+      padding: 12px 28px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 1);
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--deep-rose);
+      box-shadow: 0 0 25px rgba(255, 77, 121, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.8);
+      letter-spacing: 1px;
+      animation: glowPulse 2s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      0% { box-shadow: 0 0 15px rgba(255, 77, 121, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.8); }
+      100% { box-shadow: 0 0 30px rgba(255, 77, 121, 0.5), inset 0 0 15px rgba(255, 255, 255, 1); }
+    }
+
+    /* ==========================================================================
+       5. RESPONSIVE DESIGN
+       ========================================================================== */
+    @media (max-width: 600px) {
+      .glass-card {
+        padding: 36px 24px;
+        border-radius: 24px;
+      }
+
+      .hero-title {
+        font-size: 2.8rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .card-title {
+        font-size: 2rem;
+      }
+
+      .card-subtitle {
+        font-size: 1.5rem;
+      }
+
+      .card-description {
+        font-size: 1rem;
+      }
+
+      .final-title {
+        font-size: 3rem;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Glowing Elements -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Dynamic Particle Canvas -->
+  <canvas id="background-canvas"></canvas>
+  <!-- Confetti Canvas for Ending -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <main class="app-container">
+
+    <!-- ==================== FIRST SCREEN ==================== -->
+    <section id="intro-screen" class="glass-card">
+      <div class="name-badge">
+        <span>✨ Samia ✨</span>
+      </div>
+      <h1 class="hero-title">Hello, Samia</h1>
+      <p class="hero-subtitle">Do you want to know what I think about you?</p>
+      
+      <div class="button-group" id="intro-btn-group">
+        <button class="btn btn-yes" id="btn-yes">
+          Yes ❤️
+        </button>
+        <button class="btn btn-no" id="btn-no">
+          No 😅
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== CARDS SCREEN ==================== -->
+    <section id="cards-screen">
+      <!-- Container where JS will inject cards -->
+      <div id="cards-wrapper" style="width: 100%; display: flex; justify-content: center; align-items: center;"></div>
+      
+      <!-- Progress Indicator -->
+      <div class="progress-bar-container" id="progress-container"></div>
+    </section>
+
+    <!-- ==================== FINAL SCREEN ==================== -->
+    <section id="final-screen">
+      <div class="glass-card final-card">
+        <div class="final-heart-icon">💖</div>
+        <h2 class="final-title">Thank You For Everything</h2>
+        <p class="final-message">
+          Thank you for being yourself.<br>
+          Never stop smiling because the world is brighter with you in it.
+        </p>
+        <div class="glowing-footer">
+          Made with ❤️ especially for Samia
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    /* ==========================================================================
+       1. DATA CONFIGURATION
+       ========================================================================== */
+    const CARD_DATA = [
+      {
+        title: "Drayfa",
+        subtitle: "",
+        description: "You have a beautiful way of making people feel comfortable. Your kindness and warm personality make every conversation special."
+      },
+      {
+        title: "Da7okiya",
+        subtitle: "",
+        description: "Your smile and sense of humor can brighten even the darkest days."
+      },
+      {
+        title: "Cute",
+        subtitle: "",
+        description: "Your little expressions, your personality, and the way you act make you naturally adorable."
+      },
+      {
+        title: "Machi me7sada",
+        subtitle: "",
+        description: "You always celebrate the success of others with a sincere heart."
+      },
+      {
+        title: "Sara7a fik chwyaa dyal l7ssed",
+        subtitle: "",
+        description: "Maybe... just a tiny little bit sometimes 😄. "
+      },
+      {
+        title: "Gha da7ek m3ak machi me7sada",
+        subtitle: "",
+        description: "Just kidding! "
+      },
+      {
+        title: "7ninaa",
+        subtitle: "",
+        description: "Your caring heart and kindness make people feel safe and appreciated."
+      },
+      {
+        title: "Labo2a",
+        subtitle: "",
+        description: "You're unique in your own way, and that's what makes you truly special."
+      },
+      {
+        title: "Machi 7am9a",
+        subtitle: "(matb9aych t9oliha)",
+        description: "Don't say that again . You're smarter than you think."
+      },
+      {
+        title: "Thank You For Everything ❤️",
+        subtitle: "",
+        description: "Thank you for being yourself.\nNever stop smiling because the world is brighter with you in it."
+      }
+    ];
+
+    /* ==========================================================================
+       2. BACKGROUND PARTICLES (Floating Hearts, Roses, Sparkles)
+       ========================================================================== */
+    const bgCanvas = document.getElementById('background-canvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgParticles = [];
+    let animationFrameId;
+
+    function resizeCanvas() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor(isEndScene = false) {
+        this.reset(isEndScene);
+      }
+
+      reset(isEndScene = false) {
+        this.x = Math.random() * bgCanvas.width;
+        this.y = isEndScene ? -20 : Math.random() * bgCanvas.height;
+        this.size = Math.random() * 14 + 8;
+        this.speedY = Math.random() * 0.8 + 0.3;
+        this.speedX = Math.sin(Math.random() * Math.PI) * 0.5;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+        this.opacity = Math.random() * 0.5 + 0.3;
+        
+        // Types: 'heart', 'rose', 'sparkle'
+        const types = ['heart', 'heart', 'sparkle', 'rose'];
+        this.type = types[Math.floor(Math.random() * types.length)];
+        if (isEndScene && Math.random() > 0.4) this.type = 'rose';
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.01) * 0.8 + this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > bgCanvas.height + 30) {
+          this.reset(true);
+        }
+      }
+
+      draw() {
+        bgCtx.save();
+        bgCtx.translate(this.x, this.y);
+        bgCtx.rotate(this.rotation);
+        bgCtx.globalAlpha = this.opacity;
+
+        if (this.type === 'heart') {
+          bgCtx.fillStyle = '#ff4d79';
+          bgCtx.beginPath();
+          const d = this.size;
+          bgCtx.moveTo(0, 0);
+          bgCtx.bezierCurveTo(-d / 2, -d / 2, -d, d / 3, 0, d);
+          bgCtx.bezierCurveTo(d, d / 3, d / 2, -d / 2, 0, 0);
+          bgCtx.fill();
+        } else if (this.type === 'rose') {
+          // Simplified Rose Petal
+          bgCtx.fillStyle = '#e6005c';
+          bgCtx.beginPath();
+          bgCtx.ellipse(0, 0, this.size / 2, this.size / 1.3, 0, 0, Math.PI * 2);
+          bgCtx.fill();
+        } else {
+          // Sparkle
+          bgCtx.fillStyle = '#ffffff';
+          bgCtx.beginPath();
+          for (let i = 0; i < 4; i++) {
+            bgCtx.lineTo(Math.cos((i * Math.PI) / 2) * this.size, Math.sin((i * Math.PI) / 2) * this.size);
+            bgCtx.lineTo(Math.cos((i * Math.PI) / 2 + Math.PI / 4) * (this.size / 3), Math.sin((i * Math.PI) / 2 + Math.PI / 4) * (this.size / 3));
+          }
+          bgCtx.fill();
+        }
+
+        bgCtx.restore();
+      }
+    }
+
+    function initBackgroundParticles() {
+      bgParticles = [];
+      const count = Math.min(Math.floor(window.innerWidth / 20), 40);
+      for (let i = 0; i < count; i++) {
+        bgParticles.push(new Particle());
+      }
+    }
+
+    function animateBackground() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      bgParticles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      animationFrameId = requestAnimationFrame(animateBackground);
+    }
+
+    initBackgroundParticles();
+    animateBackground();
+
+    /* ==========================================================================
+       3. "NO" BUTTON ESCAPE LOGIC (DESKTOP & MOBILE)
+       ========================================================================== */
+    const btnNo = document.getElementById('btn-no');
+    const btnGroup = document.getElementById('intro-btn-group');
+
+    let noBtnPosition = { x: 0, y: 0 };
+
+    function moveNoButton(e) {
+      const btnRect = btnNo.getBoundingClientRect();
+      const groupRect = btnGroup.getBoundingClientRect();
+
+      // Mouse or Touch Coordinates
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      // Calculate distance between cursor/finger and button center
+      const btnCenterX = btnRect.left + btnRect.width / 2;
+      const btnCenterY = btnRect.top + btnRect.height / 2;
+
+      const distance = Math.hypot(clientX - btnCenterX, clientY - btnCenterY);
+      const safeDistance = 120; // Trigger distance
+
+      if (distance < safeDistance) {
+        // Generate random vector away from cursor
+        const angle = Math.atan2(btnCenterY - clientY, btnCenterX - clientX) + (Math.random() - 0.5);
+        const moveDistance = 140 + Math.random() * 60;
+
+        let newX = noBtnPosition.x + Math.cos(angle) * moveDistance;
+        let newY = noBtnPosition.y + Math.sin(angle) * moveDistance;
+
+        // Keep within viewport padding
+        const pad = 40;
+        const currentAbsoluteX = btnRect.left + (newX - noBtnPosition.x);
+        const currentAbsoluteY = btnRect.top + (newY - noBtnPosition.y);
+
+        if (currentAbsoluteX < pad || currentAbsoluteX > window.innerWidth - btnRect.width - pad) {
+          newX = -noBtnPosition.x;
+        }
+        if (currentAbsoluteY < pad || currentAbsoluteY > window.innerHeight - btnRect.height - pad) {
+          newY = -noBtnPosition.y;
+        }
+
+        noBtnPosition.x = newX;
+        noBtnPosition.y = newY;
+
+        btnNo.style.transform = `translate(${noBtnPosition.x}px, ${noBtnPosition.y}px)`;
+      }
+    }
+
+    // Attach listeners for both mouse and touch events
+    document.addEventListener('mousemove', moveNoButton);
+    document.addEventListener('touchstart', moveNoButton, { passive: true });
+    document.addEventListener('touchmove', moveNoButton, { passive: true });
+
+    /* ==========================================================================
+       4. CARD SEQUENCE MANAGER
+       ========================================================================== */
+    const introScreen = document.getElementById('intro-screen');
+    const cardsScreen = document.getElementById('cards-screen');
+    const cardsWrapper = document.getElementById('cards-wrapper');
+    const progressContainer = document.getElementById('progress-container');
+    const btnYes = document.getElementById('btn-yes');
+
+    let currentCardIndex = 0;
+
+    // Render Cards & Progress Dots Into DOM
+    function renderCards() {
+      cardsWrapper.innerHTML = '';
+      progressContainer.innerHTML = '';
+
+      CARD_DATA.forEach((data, index) => {
+        // Card HTML
+        const cardEl = document.createElement('div');
+        cardEl.className = `glass-card card ${index === 0 ? 'current' : ''}`;
+        cardEl.id = `card-${index}`;
+
+        const isLast = index === CARD_DATA.length - 1;
+
+        cardEl.innerHTML = `
+          <div class="card-number">Step ${index + 1} of ${CARD_DATA.length}</div>
+          <h2 class="card-title">${data.title}</h2>
+          ${data.subtitle ? `<div class="card-subtitle">${data.subtitle}</div>` : ''}
+          <p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>
+          <button class="btn btn-next" onclick="nextCard()">
+            ${isLast ? 'See Special Ending ✨' : 'More ❤️'}
+          </button>
+        `;
+        cardsWrapper.appendChild(cardEl);
+
+        // Progress Dot HTML
+        const dot = document.createElement('div');
+        dot.className = `progress-dot ${index === 0 ? 'active' : ''}`;
+        dot.id = `dot-${index}`;
+        progressContainer.appendChild(dot);
+      });
+    }
+
+    btnYes.addEventListener('click', () => {
+      introScreen.classList.add('hide');
+      setTimeout(() => {
+        introScreen.style.display = 'none';
+        cardsScreen.classList.add('active');
+        renderCards();
+      }, 600);
+    });
+
+    window.nextCard = function() {
+      const currentCard = document.getElementById(`card-${currentCardIndex}`);
+      const currentDot = document.getElementById(`dot-${currentCardIndex}`);
+
+      if (currentCardIndex < CARD_DATA.length - 1) {
+        // Exit current card
+        currentCard.classList.remove('current');
+        currentCard.classList.add('exit');
+        currentDot.classList.remove('active');
+
+        currentCardIndex++;
+
+        // Enter next card
+        const nextCardEl = document.getElementById(`card-${currentCardIndex}`);
+        const nextDot = document.getElementById(`dot-${currentCardIndex}`);
+
+        setTimeout(() => {
+          nextCardEl.classList.add('current');
+          nextDot.classList.add('active');
+        }, 150);
+
+      } else {
+        // Transition to Final Screen
+        cardsScreen.classList.remove('active');
+        setTimeout(() => {
+          cardsScreen.style.display = 'none';
+          showFinalScreen();
+        }, 600);
+      }
+    };
+
+    /* ==========================================================================
+       5. FINAL SCREEN & CONFETTI CELEBRATION
+       ========================================================================== */
+    const finalScreen = document.getElementById('final-screen');
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const confettiCtx = confettiCanvas.getContext('2d');
+    let confettiParticles = [];
+
+    function resizeConfetti() {
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeConfetti);
+
+    function showFinalScreen() {
+      finalScreen.classList.add('active');
+      resizeConfetti();
+      initConfetti();
+      animateConfetti();
+      
+      // Enhance background particles intensity
+      bgParticles.forEach(p => {
+        p.speedY = Math.random() * 1.5 + 0.8;
+      });
+    }
+
+    class Confetti {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * confettiCanvas.width;
+        this.y = Math.random() * -confettiCanvas.height;
+        this.size = Math.random() * 10 + 6;
+        this.color = ['#ff4d79', '#e6005c', '#ffccd5', '#ffffff', '#ffd700'][Math.floor(Math.random() * 5)];
+        this.speedY = Math.random() * 3 + 2;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = (Math.random() - 0.5) * 10;
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > confettiCanvas.height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        confettiCtx.save();
+        confettiCtx.translate(this.x, this.y);
+        confettiCtx.rotate((this.rotation * Math.PI) / 180);
+        confettiCtx.fillStyle = this.color;
+        confettiCtx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+        confettiCtx.restore();
+      }
+    }
+
+    function initConfetti() {
+      confettiParticles = [];
+      for (let i = 0; i < 120; i++) {
+        confettiParticles.push(new Confetti());
+      }
+    }
+
+    function animateConfetti() {
+      confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+      confettiParticles.forEach(c => {
+        c.update();
+        c.draw();
+      });
+      requestAnimationFrame(animateConfetti);
+    }
+  </script>
+</body>
+</html>
